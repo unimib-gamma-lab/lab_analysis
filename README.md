@@ -24,9 +24,10 @@
 
 This repository contains the analysis code, data processing pipelines, and documentation for three main laboratory experiments:
 
-1. **Gamma Spectroscopy & Energy Calibration**: Energy and resolution calibration of scintillation detectors using standard reference sources ($^{137}\text{Cs}$, $^{60}\text{Co}$, $^{22}\text{Na}$).
-2. **Compton Scattering & Klein-Nishina Formula**: Measurement of differential cross-sections of scattered gamma photons at different angles and comparison with quantum electrodynamics predictions.
-3. **Wu-Shaknov Experiment**: Experimental verification of quantum mechanical correlations in polarization states of annihilation photon pairs.
+1. **Gamma Spectroscopy & Energy Calibration**: Energy and resolution calibration of scintillation detectors using $^{22}\text{Na}$.
+2. **Compton Formula**: Demonstration of Compton Formula
+3. **Compton Scattering & Klein-Nishina Formula**: Measurement of differential cross-sections of scattered gamma photons at different angles and comparison with quantum electrodynamics predictions.
+4. **Wu-Shaknov Experiment**: Experimental verification of quantum mechanical correlations in polarization states of annihilation photon pairs.
 
 ---
 
