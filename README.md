@@ -7,7 +7,7 @@ Analysis code and documentation for our laboratory experiments on:
 - the **Wu–Shaknov experiment** (angular correlation of annihilation photons)
 
 **Course:** `<Laboratory of Nuclear and Subnuclear Measurements>` · **University:** `<Unimib>` · **Academic year:** `<2026/27>`
-**Group:** `<Alessandro Bomei>`, `<Federico Re>`, `<Arshia Kordi>`
+**Group:** `Alessandro Bomei`, `Federico Re`, `Arshia Kordi`
 
 > **Never used Git or GitHub?** Read [`docs/GITHUB_TUTORIAL.md`](docs/GITHUB_TUTORIAL.md) first.
 
