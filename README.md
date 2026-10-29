@@ -1,51 +1,167 @@
-# Gamma Spectroscopy & Quantum Physics Laboratory
+# Compton Lab
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
-[![C++](https://img.shields.io/badge/C%2B%2B-17-blue?logo=c%2B%2B&logoColor=white)](https://isocpp.org/)
-[![ROOT](https://img.shields.io/badge/CERN%20ROOT-v6.28%2B-orange?logo=cern&logoColor=white)](https://root.cern/)
+Analysis code and documentation for our laboratory experiments on:
 
-> Repository for the Advanced Physics Laboratory course focusing on gamma spectroscopy, Compton scattering (Klein-Nishina cross-section), and the Wu-Shaknov experiment on quantum entanglement.
+- **Compton scattering** (scattered photon energy vs. angle)
+- the **Klein–Nishina cross section**
+- the **Wu–Shaknov experiment** (angular correlation of annihilation photons)
 
----
+**Course:** `<course name>` · **University:** `<university>` · **Academic year:** `<YYYY/YY>`
+**Group:** `<member 1>`, `<member 2>`, `<member 3>`
 
-## 📋 Table of Contents
-
-- [Overview](#-overview)
-- [Repository Structure](#-repository-structure)
-- [Environment Setup](#-environment-setup)
-- [Workflow & Conventions](#-workflow--conventions)
-- [Git & GitHub Beginner's Guide](#-git--github-beginners-guide)
-- [Contributors](#-contributors)
+> **Never used Git or GitHub?** Read [`docs/GITHUB_TUTORIAL.md`](docs/GITHUB_TUTORIAL.md) first.
 
 ---
 
-## 🔬 Overview
+## Repository structure
 
-This repository contains the analysis code, data processing pipelines, and documentation for three main laboratory experiments:
-
-1. **Gamma Spectroscopy & Energy Calibration**: Energy and resolution calibration of scintillation detectors using $^{22}\text{Na}$.
-2. **Compton Formula**: Demonstration of Compton Formula
-3. **Compton Scattering & Klein-Nishina Formula**: Measurement of differential cross-sections of scattered gamma photons at different angles and comparison with quantum electrodynamics predictions.
-4. **Wu-Shaknov Experiment**: Experimental verification of quantum mechanical correlations in polarization states of annihilation photon pairs.
-
----
-
-## 📁 Repository Structure
-
-```text
+```
 .
-├── data/                  # Raw experimental spectra (.Spe, .root, .csv)
-│   ├── calibration/       # Calibration sources data
-│   ├── compton/           # Compton scattering measurements by angle
-│   └── wu-shaknov/        # Coincidence spectra for polarization
-├── docs/                  # Experiment manuals, reference papers, datasheets
-├── notebooks/             # Jupyter Notebooks for interactive data exploration
-├── results/               # Generated figures (.png, .pdf), tables, and fitted parameters
-├── src/                   # Main source code
-│   ├── cpp/               # CERN ROOT C++ macros (.C) and compiled scripts
-│   └── python/            # Data processing modules, fitting procedures, utilities
-├── .gitignore             # Files and directories ignored by Git
-├── environment.yml        # Conda environment definition file
-├── LICENSE                # License information
-└── README.md              # Project documentation
+├── README.md
+├── pyproject.toml        # project metadata + list of Python dependencies
+├── uv.lock               # exact versions of every package (do not edit by hand)
+├── .python-version       # Python version used by the project
+├── data/
+│   ├── raw/              # original measurements, NEVER modified
+│   │   ├── compton/
+│   │   └── wu_shaknov/
+│   └── processed/        # cleaned / calibrated data, produced by our code
+├── analysis/             # notebooks and scripts, one folder per topic
+│   ├── compton/
+│   ├── klein_nishina/
+│   └── wu_shaknov/
+├── src/lab_compton/      # shared Python code (importable from anywhere)
+├── results/
+│   ├── figures/          # plots used in the report
+│   └── tables/
+├── report/               # the lab report
+└── docs/                 # documentation and tutorials
+```
+
+Code used by more than one notebook (calibration, fit functions, the Klein–Nishina formula, ...)
+goes in `src/lab_compton/` and is imported like this:
+
+```python
+from lab_compton.klein_nishina import klein_nishina, compton_energy
+```
+
+---
+
+## Quick start
+
+You only need to do steps 1–3 once per computer.
+
+### 1. Install Git
+
+| System | Command / link |
+|---|---|
+| Windows | <https://git-scm.com/download/win> (or `winget install --id Git.Git -e`) |
+| macOS | `xcode-select --install` (or `brew install git`) |
+| Linux | `sudo apt install git` (Debian/Ubuntu) · `sudo dnf install git` (Fedora) |
+
+Check with `git --version`. Then follow the one-time setup in
+[`docs/GITHUB_TUTORIAL.md`](docs/GITHUB_TUTORIAL.md) (name, email, login to GitHub).
+
+### 2. Install uv
+
+[uv](https://docs.astral.sh/uv/) creates the Python environment for us, automatically.
+It also downloads the right Python version if you don't have it.
+
+**macOS / Linux** (terminal):
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**Windows** (PowerShell):
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+**Close and reopen the terminal**, then check with `uv --version`.
+
+### 3. Clone the repository and create the environment
+
+```bash
+git clone https://github.com/unimib-gamma-lab/lab_analysis.git
+cd lab_analysis
+uv sync
+```
+
+`uv sync` creates a `.venv/` folder inside the repository and installs every library listed in
+`uv.lock`. Everyone gets exactly the same versions.
+
+Quick check that everything works:
+
+```bash
+uv run python -c "import numpy, scipy, pandas, matplotlib; print('Environment OK')"
+```
+
+---
+
+## Everyday use
+
+### Run a script
+
+```bash
+uv run python analysis/compton/my_script.py
+```
+
+`uv run` always uses the project environment: there is nothing to activate.
+
+### Open Jupyter
+
+```bash
+uv run jupyter lab
+```
+
+### VS Code
+
+Open the repository folder, then choose the interpreter `.venv` (Command Palette →
+*Python: Select Interpreter* → the one inside `.venv`). Notebooks will use the same environment.
+
+### Add a new library
+
+```bash
+uv add <package-name>
+```
+
+This updates `pyproject.toml` and `uv.lock`: **commit both files**. Your teammates then run
+`git pull` and `uv sync` to get the new package.
+
+> After every `git pull`, if something fails with `ModuleNotFoundError`, run `uv sync`.
+
+---
+
+## How we work together
+
+1. `git pull` **before** starting to work.
+2. Never work directly on `main`: create a branch for each task (`<yourname>/<topic>`).
+3. Commit small and often, with a clear message.
+4. Push your branch and open a **Pull Request**; a teammate reviews and merges it.
+5. Only one person at a time edits a given notebook (notebook conflicts are painful to fix).
+
+Details and every command: [`docs/GITHUB_TUTORIAL.md`](docs/GITHUB_TUTORIAL.md).
+
+### Data and file conventions
+
+- `data/raw/` is read-only: never edit or overwrite original measurements. All cleaning happens in
+  code and the output goes to `data/processed/`.
+- Use descriptive names, e.g. `2026-11-05_compton_90deg_run1.csv`.
+- Figures are generated by code and saved in `results/figures/`, not edited by hand.
+- GitHub rejects files larger than 100 MB (and warns above 50 MB). Do not commit big files:
+  talk to the group about where to store them.
+
+---
+
+## Troubleshooting
+
+| Problem | Solution |
+|---|---|
+| `uv: command not found` | Close and reopen the terminal; if it persists, reinstall uv (step 2). |
+| `git: command not found` | Install Git (step 1) and reopen the terminal. |
+| `ModuleNotFoundError` after a `git pull` | Run `uv sync` inside the repository. |
+| VS Code / Jupyter can't find a package | Select the `.venv` interpreter / kernel (see above). |
+| `uv sync` fails with a network error | Check your connection or VPN and retry. |
+| Anything weird with Git | Run `git status` and read it; then ask the group. |
