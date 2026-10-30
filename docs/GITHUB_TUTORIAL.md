@@ -60,7 +60,7 @@ git config --global pull.rebase false
 
 ### 2.4 Log in to GitHub from your computer
 
-Pick **one** of the two options.
+Pick **one** of the three options.
 
 **Option A – GitHub Desktop (graphical, Windows and macOS, easiest for beginners)**
 
@@ -73,6 +73,20 @@ Pick **one** of the two options.
    `sudo dnf install gh` (Fedora) · other systems: <https://cli.github.com>.
 2. Run `gh auth login` and answer: *GitHub.com* → *HTTPS* → *Yes* (authenticate Git with your
    GitHub credentials) → *Login with a web browser*.
+3. Check with `gh auth status`: it should say you are logged in to github.com.
+
+**Option C – SSH key (only if you already have an SSH key added to your GitHub account)**
+
+1. Test the connection: `ssh -T git@github.com`. The expected answer is
+   `Hi <username>! You've successfully authenticated, but GitHub does not provide shell access.`
+2. Clone with the SSH address (see section 3) instead of the `https://` one.
+
+> The address you clone with decides how you log in: `https://...` uses Options A/B,
+> `git@github.com:...` uses Option C. A repository already cloned with one of them can be switched
+> with `git remote set-url origin <new-address>`.
+
+> GitHub **does not accept your account password** from Git any more. If Git asks for a password
+> and rejects it, you skipped this step (see section 9).
 
 ### 2.5 Install uv
 
@@ -94,7 +108,15 @@ cd lab_analysis
 uv sync
 ```
 
-(With Option B you can also use `gh repo clone unimib-gamma-lab/lab_analysis`.)
+(With Option B you can also use `gh repo clone unimib-gamma-lab/lab_analysis`. With Option C clone
+`git@github.com:unimib-gamma-lab/lab_analysis.git` instead.)
+
+Check that it worked:
+
+```bash
+git status      # should start with "On branch main"
+ls -a           # should list .gitignore and .python-version among the files
+```
 
 **GitHub Desktop**
 
@@ -213,6 +235,8 @@ How to avoid most of them:
 - Don't commit files larger than ~50 MB (GitHub blocks anything above 100 MB).
 - Don't use `git push --force`, ever, unless the whole group agrees.
 - Don't work directly on `main`.
+- Don't copy files into the repository with a file manager without checking `ls -a` afterwards:
+  hidden files such as `.gitignore` are easily left behind (see section 9).
 
 ---
 
@@ -245,3 +269,39 @@ How to avoid most of them:
 
 When in doubt, **ask before running a command you don't understand**: almost everything in Git
 is recoverable, as long as the work was committed.
+
+---
+
+## 9. Common error messages
+
+Git and uv translate part of their messages into your system language. If yours are, for example,
+in Italian, look for the equivalent sentence. On Linux and macOS you can put `LANG=C` before a
+command (e.g. `LANG=C git status`) to get English messages, which are easier to search online.
+
+### Environment (uv, Python)
+
+| Message / symptom | Cause | What to do |
+|---|---|---|
+| `No interpreter found for Python 3.12 ... Python downloads are set to 'manual'` | uv is configured not to download Python on its own. | Run `uv python install 3.12` (use the version written in `.python-version`), then `uv sync` again. |
+| `uv: command not found` or `git: command not found` | The program is not installed, or the terminal was opened before the installation. | Install it (see the README) and **reopen the terminal**. |
+| `ModuleNotFoundError` after a `git pull` | A teammate added a new library. | Run `uv sync`. |
+| Strange import errors even after `uv sync` | The `.venv/` folder is damaged. | Delete it and recreate it: `rm -rf .venv && uv sync` (Windows PowerShell: `Remove-Item -Recurse -Force .venv`, then `uv sync`). Nothing is lost: `.venv/` is rebuilt from `uv.lock`. |
+| `.venv/` shows up in `git status`, or was committed | `.gitignore` is missing (hidden files not copied). | Check `ls -a`. If `.gitignore` is missing, ask. If `.venv/` was already committed: `git rm -r --cached .venv`, then commit. |
+
+### Login and push
+
+| Message / symptom | Cause | What to do |
+|---|---|---|
+| `Permission denied (publickey)` | SSH key not added to your GitHub account, or not loaded. | Add the key under GitHub → *Settings → SSH and GPG keys*, test with `ssh -T git@github.com`; or use Option A/B with the `https://` address. |
+| `Authentication failed` / `Support for password authentication was removed` | GitHub does not accept the account password from Git. | Log in as described in section 2.4 (Option A or B). |
+| `Author identity unknown` / `Please tell me who you are` | Name and email not configured. | Run the commands in section 2.3, then repeat the commit. |
+| `rejected ... (fetch first)` or `non-fast-forward` | Someone pushed before you. | `git pull`, solve conflicts if any (section 5), then `git push`. **Never** `--force`. |
+| `You are not currently on a branch` or `HEAD detached` | Your repository is not on a branch. | Run `git status`. If it doesn't start with "On branch ...", **stop and ask the group**: don't try to fix it by guessing. |
+| `File ... exceeds GitHub's file size limit of 100 MB` | A file is too large for GitHub. | If you haven't pushed: `git reset --soft HEAD~1`, then `git restore --staged <file>`, commit again without it and talk to the group about where to store it. |
+
+### Commit
+
+| Message / symptom | Cause | What to do |
+|---|---|---|
+| `nothing to commit` | Git sees no changes to save. | Run `git status`. If files appear under *Untracked files* or *Changes not staged*, use `git add <file>` first. If nothing appears, you are probably in the wrong folder (`pwd`) or the files were never copied there. |
+| Hidden files (`.gitignore`, `.python-version`) missing after copying files by hand | File managers hide files starting with a dot. | Copy from the terminal with `cp -a source/. destination/`, or show hidden files (Linux: `Ctrl+H`; macOS: `Cmd+Shift+.`; Windows: *View → Show → Hidden items*). |

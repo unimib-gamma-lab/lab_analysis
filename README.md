@@ -11,8 +11,6 @@ Analysis code and documentation for our laboratory experiments on:
 
 > **Never used Git or GitHub?** Read [`docs/GITHUB_TUTORIAL.md`](docs/GITHUB_TUTORIAL.md) first.
 
----
-
 ## Repository structure
 
 ```
@@ -65,7 +63,8 @@ Check with `git --version`. Then follow the one-time setup in
 ### 2. Install uv
 
 [uv](https://docs.astral.sh/uv/) creates the Python environment for us, automatically.
-It also downloads the right Python version if you don't have it.
+It can also download the right Python version if you don't have it (if uv refuses to, see
+[Troubleshooting](#troubleshooting)).
 
 **macOS / Linux** (terminal):
 
@@ -164,4 +163,7 @@ Details and every command: [`docs/GITHUB_TUTORIAL.md`](docs/GITHUB_TUTORIAL.md).
 | `ModuleNotFoundError` after a `git pull` | Run `uv sync` inside the repository. |
 | VS Code / Jupyter can't find a package | Select the `.venv` interpreter / kernel (see above). |
 | `uv sync` fails with a network error | Check your connection or VPN and retry. |
+| `No interpreter found for Python 3.12 ... downloads are set to 'manual'` | Run `uv python install 3.12`, then `uv sync` again. |
 | Anything weird with Git | Run `git status` and read it; then ask the group. |
+
+More error messages and their fixes: [`docs/GITHUB_TUTORIAL.md`](docs/GITHUB_TUTORIAL.md#9-common-error-messages).
