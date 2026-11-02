@@ -1,0 +1,34 @@
+# Some notes on the MCA; some are probably less important, but anyway. 
+# I'll use "#" for comments as in python if necessary
+
+*Critical parameters*
+
+1) Dead_time = 8e-6; meaning: time for the hardware to elaborate each single impulse and register in the memory. It can be useful e.g. to verify dead time
+
+2) Dead time correction: selectable between "Extended Live-Time (Gedcke-Hale) and "Simple Live-Time". The first one seems to be more precise. If I can, I study it a little more to understand its principle.
+
+3) Conversion gain (number of channels): depending on the model, for the 2k version we can choose via software 256, 512, 1024, 2048 channels, while for the 8k version we can arrive till 4096 and 8192.
+Suggestion: considering NaI has generally low energy resolution, choosing to high channels risk to "saturate" (bins to thick with low information and much Poisson noise)
+
+4) Electronic gain instability = <= 50 ppm/°C (can be used to compute the systematics for temperature)
+
+5) Inputs (All 1 kOhm resistance): 
+
+Input: Accepts unipolar positive impulses between 0 and 10 V (maximum at 12V ?). Time rising between 0.25 and 30 microseconds (not a problem for a us).
+This means that the 1274 peak must be, in Volt, below 10 V, this sets a maximum for the gain or HV supply.
+
+ADC gate accepts slow positive NIM imput. On the computer we can select Coincidence and Anticoincidence
+Signal must occur prior to and extend 0.5 μs beyond the peak of the pulse;
+
+PUR: Pile up rejection input, accepts slow-positive NIM signal; seems cool, we have to see if there's a way to use it
+
+BUSY: busy input used by live-time correction circuits, accepts slow-positive NIM signal, signal must occur prior to peak detect
+
+
+
+6) Software controls (actually regards Maestro): ADC LLD (Low Level discriminator) and ADC ULD (Upper Level Discriminator) to cut for example the electrical noise.
+
+7) "Successive-approximation con sliding scale linearization": low differential non-linearity (<= +-1%), this means the calibration should be approximately linear
+Integral non-linearity is <=+-0.025% over the top 99% of the dynamic range
+
+8) Memory of 2^31 - 1 counts per channel, i.e. ~ 2 billio
