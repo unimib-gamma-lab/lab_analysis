@@ -1,0 +1,68 @@
+1) https://ludlums.com/documents/technical-articles/341-determining-detector-operating-voltage
+
+General idea: we expected to reach a plateau when increasing the voltage
+
+				 ___/
+				/
+				
+We should choose the operating voltage approximately in the middle of the plateau (small oscillascionts in the counts).
+
+2) Optimization of 3×3 inch NaI(Tl) detector related to energy, distance and
+bias voltage 
+
+The author searches the correlation between the energy of the incident photons, the distance between the source and the detector and lastly the HV to the PMT.
+
+    a) Efficinecy @ Gamma energy: peak efficiency has a non linear behaviour, at 
+       low energy peak efficieny is higher, it reaches a maximum and than goes 
+       down
+    b) Source-Detector distance: the more the distance, the efficinecy decreases 
+       because the solid angle decreases
+    c) HV: optimal if the collected electric charge is linearly proportional to 
+       the gamma energy. Not optimal HV values can cause degradation in the enegy 
+       resolution
+       
+3) Optimizing Pulse Height Resolution Measurements 
+
+(I write only the feasible things)
+
+Problems for PMT:
+    a) There is no magnetic or electrostatic shielding. In this case,
+       re-orienting the PMT with respect to the earth’s magnetic
+       field will result in a pulse height shift. Installing the PMT
+       in a mu-metal shield and attaching the shield to system
+       ground is a common solution.
+    b) The PMT is operated at too high of a voltage. This results
+       in anode saturation. This may be diagnosed by viewing
+       the anode output directly on the input of an oscilloscope
+       terminated in 50Ω. View the pulse amplitude at the
+       energy to be measured. Then place a source with gamma
+       ray energy roughly twice the previous source and view its
+       pulse amplitude. The ratio of the viewed pulses should
+       equal the ratio of the gamma ray energies. If not, then
+       the anode is probably saturating
+       
+Problems for Preamp:
+    a) The Preamp is saturating. This can be viewed by looking at the
+       preamp output at the high impedance input of an oscilloscope. 
+       Increase the high voltage with a source present and find that voltage 
+       above which the preamp pulse clips. To prevent saturation, the PMT 
+       should be run at substantially lower voltage than this clipping voltage.
+    b) The cable leading from the PMT signal output to the preamp input is too 
+       long. A longer cable increases the capacitance at the input of the 
+       preamp. This increased capacitance may have an effect on the noise
+       characteristics of the preamp. Between 1 and 3 feet, or 
+       as short as practical, is the recommended length for this cable
+       
+Problems for Amp:
+    a) The wrong integrating time constant is used. Scintillators with 
+       longer decay times require longer integrating times. As a rule of    
+       thumb, the integrating time constant is set at 4 x the 1 /e decay time 
+       of the scintillator.
+
+Problems with determining resolution:
+    a) MCA is not zeroed
+    b) MCA offset
+    c) The wrong pulse shape is used at the input of the MCA. Some MCAs are 
+       designed to work with a unipolar input pulse and others are designed 
+       for a bipolar input
+
