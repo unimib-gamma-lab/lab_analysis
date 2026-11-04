@@ -1,0 +1,22 @@
+### All our modules ###
+
+# Left detector (0)
+
+- Preamp: Ortec 276
+- Scintillator and PMT: Alpha Spectra Inc model 4I5/2S3 model
+- Amp/Tisca: Silena 7616
+
+# Right detector (1)
+
+- Scintillator Scionix 51B51/2M
+- 2" Voltage divider and Preamp VD14 - E2
+- Caen Amplifier MOD. N968
+
+# Other
+
+- Silena Crate 7000
+- Caen N1470 HV POWER SUPPLY
+- PCI-Trump SN 534
+- Maestro V.7.0
+- Oscilloscope TDS200E series Tektronix
+- Ortec 419 Pulser	
