@@ -1,6 +1,5 @@
 # Maestro.py - README
 
-```markdown
 # maestro.py
 
 Read and vectorise MCA spectra saved by Maestro (`.Spe` ASCII format).
