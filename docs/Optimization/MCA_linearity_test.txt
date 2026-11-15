@@ -1,0 +1,24 @@
+ch att_factor V
+
+GAIN 4X
+21-22, x100, 100 mV
+42, x50, 200 mV
+55, x40, 250 mV
+103-104, x20, 500 mV
+211, x10, 1V
+423-424 x5, 2V
+527, X4, 2.5v
+1054, 2X, 5v
+
+
+GAIN 4 + 1 fine 
+1329, x2, 6V
+1605, x2, 8V
+1878, x2, 8.5V
+
+1044 dont use it!
+
+GAIN 4, 4fine 
+858, x5, 4V
+
+Everything from 1700 sucks

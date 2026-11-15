@@ -1,0 +1,68 @@
+# Silena Mod 7616 (Amp-Tisca)
+
+It does both amplification and Tisca.
+
+Operating modes:
+    - Sca mode: logic output when the amplified pulse falls inside the energy window set by E and dE
+    - Tisca mode: same as Sca, but it refers to the leading edge of the preamp signal; sca pulse is delayed by about 200 ns past the amplifier output peak
+    
+Main amplifier specifications:
+    - Polarity: + or - (selectable)
+    - Amplitude: 0-10 V
+    - Rise time: 10 - 650 ns
+    - Decay time constant > 40 µs
+    - Impedance: 1 kΩ
+    - Shaping: ~ Gaussian
+    - Shaping time constant: 0.5 - 2 µs (selectable)
+    - Gain: variable from 12 to 1280 (coarse and fine gain)
+    - Integral nonlinearity: 0.05% of full scale
+    - Noise: 5 µV at 2 µs and gain 100
+    - Temperature drift: 0.0075%/°C of full scale; DC level 50 µV/°C.
+    - Spectrum broadening: for Co-60 1.33 MeV peak, from 2 kcps to 50 kcps and 8 V pulse height, FWHM changes by less than 16%.
+    - Peak stability: < 0.025%
+    - Overload recovery: ~ 2% of full scale after 1000× overload
+    - Baseline restorer: gated, high or low, internally selectable
+    
+Output:
+    - Amplifier output: 0 to +10 V, front and rear BNC.
+    - Front-panel output impedance: 1 Ω or 93 Ω, internally selectable.
+    - Rear-panel output impedance: 93 Ω.
+    - SCA output: positive TTL-level logic pulse, width 0.5 to 6 µs, internally adjustable; rise/fall time 25 ns; impedance 100 Ω.
+    - Separate rear-panel DISC output can be selected internally as either:
+        Lower-level discriminator output, E, or
+        Upper-level discriminator output, E + ΔE.
+
+Front panel controls:
+    - Fine Gain: ten-turn locking dial, ×3 to ×10.
+    - Coarse Gain: six-position rotary switch.
+    - Shaping Time: pushbutton: IN = 0.5 µs, OUT = 2 µs.
+    - PZ Adjust: 22-turn screwdriver potentiometer for pole-zero cancellation.
+    - Input polarity: two-position toggle.
+    - Window ΔE: ten-turn precision potentiometer; range 0–10 V or 0–1 V depending on rear-panel switch.
+    - Lower Level E: ten-turn precision potentiometer; baseline from 50 mV to 10 V.
+    - AMP OUT and SCA OUT BNC connectors.
+    - LED indicator associated with the lower-level discriminator, useful for setting the discriminator just above noise.
+    
+Rear panel controls:
+    - Amplifier output and SCA output BNCs.
+    - DISC output: lower E or upper E + ΔE, internally selectable.
+    - E RANGE switch: ΔE full scale 0–10 V or 0–1 V.
+    - AMP IN BNC: accepts positive or negative preamplifier pulses.
+
+Internal controls:
+    - P2: DC level of output amplifier.
+    - P3: SCA output pulse width, 0.5–6 µs.
+    - S1: selects DISC output as LLD(E) or ULD(E + ΔE); shipped in LLD(E).
+    - S2: selects front-panel or remote control of lower level E.
+    - S3: baseline restorer low/high; shipped in LOW.
+    - S4: selects SCA or Time SCA mode.
+    - Jumper: selects front-panel amplifier output impedance, 0 Ω or 93 Ω; shipped as 0 Ω.
+    
+Pole-zero cancellation
+extremely critical for good high-count-rate performance. Procedure:
+    - Set source count rate between 2 kHz and 20 kHz.
+    - Observe output pulses on an oscilloscope.
+    - Adjust PZ so the pulse trailing edge returns to baseline without overshoot or undershoot.
+    - Use the suggested clamp circuit with a 1 kΩ resistor and Schottky diodes to avoid overloading the oscilloscope.
+    
+

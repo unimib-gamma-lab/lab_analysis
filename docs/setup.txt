@@ -20,3 +20,6 @@
 - Maestro V.7.0
 - Oscilloscope TDS200E series Tektronix
 - Ortec 419 Pulser	
+
+
+Distance S1 - source = 44 cm +- 1 mm (from the right border)
